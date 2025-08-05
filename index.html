@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quote Reveal + Blinking Cursor</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      height: 100vh;
+      font-family: 'Helvetica', sans-serif;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .quote {
+      transition: color 0.4s ease;
+      text-transform: uppercase;
+      text-align: justify;
+      text-align-last: justify;
+      word-spacing: 0.3em;
+      letter-spacing: 0.05em;
+      padding: 4vw;
+      font-size: 2.2vw;
+      line-height: 1.6;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 92vw;
+      height: 100vh;
+      box-sizing: border-box;
+      z-index: 1;
+      color: black;
+    }
+
+    .quote a {
+      color: transparent;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .quote a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .quote.visible a {
+      color: white;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(0, 255, 0, 0.7);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 10001;
+      animation: blink 1.5s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.0001%, 100% { opacity: 0; }
+    }
+
+    .toggle-container {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10002;
+      font-family: Helvetica, sans-serif;
+      color: white;
+      font-size: 0.95rem;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background-color: black;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #0f0;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(22px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Toggle switch -->
+  <div class="toggle-container">
+    <label class="switch">
+      <input type="checkbox" id="toggleText">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- Quote links -->
+  <div class="quote" id="quote">
+    <a href="1.html" target="_blank" rel="noopener noreferrer"></a>
+    <a href="2.html" target="_blank" rel="noopener noreferrer"></a>
+    <a href="3.html" target="_blank" rel="noopener noreferrer"></a>
+    <a href="4.html" target="_blank" rel="noopener noreferrer"></a>
+    <a href="5.html" target="_blank" rel="noopener noreferrer"></a>
+    <a href="6.html" target="_blank" rel="noopener noreferrer"></a>
+    <a href="7.html" target="_blank" rel="noopener noreferrer"></a>
+    <a href="8.html" target="_blank" rel="noopener noreferrer"></a>
+    <a href="9.html" target="_blank" rel="noopener noreferrer"></a>
+  </div>
+
+  <!-- Blinking green cursor -->
+  <div class="cursor" id="customCursor"></div>
+
+  <script>
+    // Toggle visibility of text
+    const toggle = document.getElementById('toggleText');
+    const quote = document.getElementById('quote');
+    toggle.addEventListener('change', () => {
+      if (toggle.checked) {
+        quote.classList.add('visible');
+      } else {
+        quote.classList.remove('visible');
+      }
+    });
+
+    // Blinking green cursor follows mouse
+    const cursor = document.getElementById('customCursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Random quotes, same links
+    const quoteSets = [
+      [
+        "A SIGNAL", "DOES NOT", "NECESSARILY MEAN THAT", "YOU",
+        "WANT TO BE LOCATED", "OR DESCRIBED", "IT CAN MEAN THAT YOU WANT TO",
+        "BE KNOWN AS UNLOCATABLE", "AND HIDDEN"
+      ],
+      [
+        "THE NAME OF A MAN", "IS", "A NUMBING BLOW", "FROM", "WHICH",
+        "HE", "NEVER", "RECOVERS"
+      ],
+      [
+        "SO CLOSE THAT", "MY FEAR OF THEM", "AND THEIR FEAR OF ME",
+        "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD",
+        "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD"
+      ]
+    ];
+
+    const selected = quoteSets[Math.floor(Math.random() * quoteSets.length)];
+    const links = document.querySelectorAll('#quote a');
+    links.forEach((link, i) => {
+      link.textContent = selected[i] || "";
+    });
+  </script>
+</body>
+</html>
