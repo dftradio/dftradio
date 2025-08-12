@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quote Reveal + Blinking Cursor</title>
+  <title>DFT RADIO</title>
+  <link rel="icon" type="image/x-icon" href="/Users/charlottestrange/Documents/GitHub/dftradio/assets/favicon.png">
   <style>
     body {
       margin: 0;
@@ -12,6 +13,7 @@
       font-family: 'Helvetica', sans-serif;
       overflow: hidden;
       cursor: none;
+      color: white;
     }
 
     .quote {
@@ -42,7 +44,6 @@
 
     .quote a:hover {
       color: white;
-      text-decoration: underline;
     }
 
     .quote.visible a {
@@ -122,6 +123,38 @@
     input:checked + .slider:before {
       transform: translateX(22px);
     }
+
+    @media (max-width: 768px) {
+      .quote {
+        font-size: 4.5vw;
+        padding: 6vw;
+      }
+    }
+
+    .glowing-asterisk {
+  color: rgba(0, 255, 0, 0.7);
+  height: 500px;
+  margin-left: 0.2em;
+  pointer-events: none;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow: 
+      0 0 5px rgba(0, 255, 0, 0.7),
+      0 0 10px rgba(0, 255, 0, 0.62),
+      0 0 15px rgba(0, 255, 0, 0.5);
+    opacity: 1;
+  }
+  50% {
+    text-shadow: 
+      0 0 10px rgba(0, 255, 0, 1),
+      0 0 20px rgba(0, 255, 0, 0.9),
+      0 0 30px rgba(0, 255, 0, 0.8);
+    opacity: 0.6;
+  }
+}
   </style>
 </head>
 <body>
@@ -149,47 +182,115 @@
   <!-- Blinking green cursor -->
   <div class="cursor" id="customCursor"></div>
 
+  <!-- Audio placeholders -->
+  <audio id="audioTL" loop autoplay muted></audio>
+  <audio id="audioTR" loop autoplay muted></audio>
+  <audio id="audioBL" loop autoplay muted></audio>
+  <audio id="audioBR" loop autoplay muted></audio>
+
   <script>
-    // Toggle visibility of text
+    // QUOTE TOGGLE
     const toggle = document.getElementById('toggleText');
     const quote = document.getElementById('quote');
     toggle.addEventListener('change', () => {
-      if (toggle.checked) {
-        quote.classList.add('visible');
-      } else {
-        quote.classList.remove('visible');
-      }
+      quote.classList.toggle('visible', toggle.checked);
     });
 
-    // Blinking green cursor follows mouse
+    // CURSOR FOLLOW
     const cursor = document.getElementById('customCursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
     });
 
-    // Random quotes, same links
+    // RANDOM QUOTES
     const quoteSets = [
-      [
-        "A SIGNAL", "DOES NOT", "NECESSARILY MEAN THAT", "YOU",
-        "WANT TO BE LOCATED", "OR DESCRIBED", "IT CAN MEAN THAT YOU WANT TO",
-        "BE KNOWN AS UNLOCATABLE", "AND HIDDEN"
-      ],
-      [
-        "THE NAME OF A MAN", "IS", "A NUMBING BLOW", "FROM", "WHICH",
-        "HE", "NEVER", "RECOVERS"
-      ],
-      [
-        "SO CLOSE THAT", "MY FEAR OF THEM", "AND THEIR FEAR OF ME",
-        "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD",
-        "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD"
-      ]
+      ["A SIGNAL", "DOES NOT", "NECESSARILY MEAN THAT", "YOU", "WANT TO BE LOCATED", "OR DESCRIBED", "IT CAN MEAN THAT YOU WANT TO", "BE KNOWN AS UNLOCATABLE", "AND HIDDEN"],
+      ["THE NAME OF A MAN", "IS", "A NUMBING BLOW", "FROM", "WHICH", "HE", "NEVER", "RECOVERS", ""],
+      ["SO CLOSE THAT", "MY FEAR OF THEM", "AND THEIR FEAR OF ME", "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD", "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD"]
+    ];
+    const selected = quoteSets[Math.floor(Math.random() * quoteSets.length)];
+    const cursorColor = 'rgba(0, 255, 0, 0.7)';
+
+
+// ASTERISKS
+document.querySelectorAll('#quote a').forEach((link, i) => {
+  link.textContent = ''; // clear
+
+  const text = selected[i] || "";
+
+  const textNode = document.createTextNode(text);
+  const asterisk = document.createElement('span');
+  asterisk.textContent = '*';
+  asterisk.classList.add('glowing-asterisk');
+
+  link.appendChild(textNode);
+  link.appendChild(asterisk);
+});
+
+    // AUDIO SETUP
+    const audioPool = [
+      "/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3", "/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3", "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'",
+      "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'", "audio5.mp3", "audio6.mp3",
+      "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'", "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'", "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'"
     ];
 
-    const selected = quoteSets[Math.floor(Math.random() * quoteSets.length)];
-    const links = document.querySelectorAll('#quote a');
-    links.forEach((link, i) => {
-      link.textContent = selected[i] || "";
+    // Shuffle array
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    const shuffled = shuffle([...audioPool]);
+    const selectedAudio = shuffled.slice(0, 4); // No duplicates
+
+    const audioElements = {
+      TL: document.getElementById('audioTL'),
+      TR: document.getElementById('audioTR'),
+      BL: document.getElementById('audioBL'),
+      BR: document.getElementById('audioBR')
+    };
+
+    const cornerKeys = Object.keys(audioElements);
+    cornerKeys.forEach((corner, i) => {
+      audioElements[corner].src = selectedAudio[i];
+    });
+
+    // Unmute on first interaction
+window.addEventListener('click', () => {
+  Object.values(audioElements).forEach(audio => {
+    audio.muted = false;
+  });
+}, { once: true });
+
+    // Volume based on cursor distance
+    function getDistance(x1, y1, x2, y2) {
+      return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+    }
+
+    function normalizeDistance(distance, maxDistance) {
+      const volume = 1 - (distance / maxDistance);
+      return Math.max(0, Math.min(1, volume));
+    }
+
+    document.addEventListener('mousemove', e => {
+      const { innerWidth: w, innerHeight: h } = window;
+      const coords = {
+        TL: [0, 0],
+        TR: [w, 0],
+        BL: [0, h],
+        BR: [w, h]
+      };
+      const maxDist = Math.sqrt(w ** 2 + h ** 2);
+
+      for (const [corner, [cx, cy]] of Object.entries(coords)) {
+        const dist = getDistance(e.clientX, e.clientY, cx, cy);
+        const volume = normalizeDistance(dist, maxDist * 0.75);
+        audioElements[corner].volume = volume;
+      }
     });
   </script>
 </body>
