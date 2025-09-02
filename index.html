@@ -4,13 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DFT RADIO</title>
-  <link rel="icon" type="image/x-icon" href="/Users/charlottestrange/Documents/GitHub/dftradio/assets/favicon.png">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.png">
   <style>
     body {
       margin: 0;
       background-color: black;
       height: 100vh;
-      font-family: 'Helvetica', sans-serif;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-style: bold;
       overflow: hidden;
       cursor: none;
       color: white;
@@ -19,17 +20,15 @@
     .quote {
       transition: color 0.4s ease;
       text-transform: uppercase;
-      text-align: justify;
-      text-align-last: justify;
-      word-spacing: 0.3em;
-      letter-spacing: 0.05em;
+      word-spacing: 0.9em;
+      letter-spacing: 0.1em;
       padding: 4vw;
-      font-size: 2.2vw;
+      font-size: 4.2vw;
       line-height: 1.6;
-      position: absolute;
-      top: 0;
+      position:sticky;
+      top: 100;
       left: 0;
-      width: 92vw;
+      width: 100vw;
       height: 100vh;
       box-sizing: border-box;
       z-index: 1;
@@ -50,8 +49,11 @@
       color: white;
     }
 
+    /* Custom blinking green cursor */
     .cursor {
       position: fixed;
+      left: 0;
+      top: 0;
       width: 40px;
       height: 40px;
       background-color: rgba(0, 255, 0, 0.7);
@@ -59,12 +61,11 @@
       pointer-events: none;
       transform: translate(-50%, -50%);
       z-index: 10001;
-      animation: blink 1.5s steps(1) infinite;
+      animation: blink 1.5s step-start infinite;
     }
 
     @keyframes blink {
-      0%, 50% { opacity: 1; }
-      50.0001%, 100% { opacity: 0; }
+      50% { opacity: 0; }
     }
 
     .toggle-container {
@@ -130,31 +131,6 @@
         padding: 6vw;
       }
     }
-
-    .glowing-asterisk {
-  color: rgba(0, 255, 0, 0.7);
-  height: 500px;
-  margin-left: 0.2em;
-  pointer-events: none;
-  animation: pulseGlow 2s infinite ease-in-out;
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    text-shadow: 
-      0 0 5px rgba(0, 255, 0, 0.7),
-      0 0 10px rgba(0, 255, 0, 0.62),
-      0 0 15px rgba(0, 255, 0, 0.5);
-    opacity: 1;
-  }
-  50% {
-    text-shadow: 
-      0 0 10px rgba(0, 255, 0, 1),
-      0 0 20px rgba(0, 255, 0, 0.9),
-      0 0 30px rgba(0, 255, 0, 0.8);
-    opacity: 0.6;
-  }
-}
   </style>
 </head>
 <body>
@@ -179,7 +155,7 @@
     <a href="9.html" target="_blank" rel="noopener noreferrer"></a>
   </div>
 
-  <!-- Blinking green cursor -->
+  <!-- Custom green cursor -->
   <div class="cursor" id="customCursor"></div>
 
   <!-- Audio placeholders -->
@@ -207,35 +183,29 @@
     const quoteSets = [
       ["A SIGNAL", "DOES NOT", "NECESSARILY MEAN THAT", "YOU", "WANT TO BE LOCATED", "OR DESCRIBED", "IT CAN MEAN THAT YOU WANT TO", "BE KNOWN AS UNLOCATABLE", "AND HIDDEN"],
       ["THE NAME OF A MAN", "IS", "A NUMBING BLOW", "FROM", "WHICH", "HE", "NEVER", "RECOVERS", ""],
-      ["SO CLOSE THAT", "MY FEAR OF THEM", "AND THEIR FEAR OF ME", "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD", "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD"]
+      ["SO CLOSE THAT", "MY FEAR OF THEM", "AND THEIR FEAR OF ME", "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD", "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD"],
+      ["A REPETITIVE FLURRY", "OF MULTI-TONAL UTTERANCES—", "SQUEAKS AND CHIRPS", "IN QUICK SUCCESSION,", "NON-REVERBERANT", "WITH A SHORT RELEASE,", "MOVING ON ONE ANOTHER", "LIKE THE BEAT BELOW A CLUB MIX.", "(AND, OF COURSE, WHERE BETTER TO ECHOLOCATE THAN THE DARK, MUSTY CAVE OF A NIGHTCLUB?)."],
+      ["THEY BOUNCE OFF NEARBY OBSTACLES.", "SITUATE THEMSELVES THREE DIMENSIONALLY THROUGH THEIR USE OF INFORMATION", "COLLECTED WITH TWO EARS,", "WHOLE BODY, AND THE DANK CAVE.", "THE BAT'S USE OF SOUND WAVES", "TO ILLUMINATE", "AN INVISIBLE SPACE", "IS THE PROCESS OF MANY SENSES AND BODILY ORGANS.", "THE EARS, MOUTH, AND NOSE WORK TOGETHER."],
+      ["AN OPENING","REALIZING","THAT A FLOODLIGHT","ISN'T", "ALWAYS","OR NECESSARILY","THE", "BEST WAY","TO ILLUMINATE IT"]
     ];
     const selected = quoteSets[Math.floor(Math.random() * quoteSets.length)];
-    const cursorColor = 'rgba(0, 255, 0, 0.7)';
-
-
-// ASTERISKS
-document.querySelectorAll('#quote a').forEach((link, i) => {
-  link.textContent = ''; // clear
-
-  const text = selected[i] || "";
-
-  const textNode = document.createTextNode(text);
-  const asterisk = document.createElement('span');
-  asterisk.textContent = '*';
-  asterisk.classList.add('glowing-asterisk');
-
-  link.appendChild(textNode);
-  link.appendChild(asterisk);
-});
+    document.querySelectorAll('#quote a').forEach((link, i) => {
+      link.textContent = selected[i] || "";
+    });
 
     // AUDIO SETUP
     const audioPool = [
-      "/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3", "/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3", "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'",
-      "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'", "audio5.mp3", "audio6.mp3",
-      "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'", "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'", "'/Users/charlottestrange/Desktop/Music/franklin cosmos - much ado about fucking/franklin cosmos - much ado about fucking - 01 wreck tangled.mp3'"
+      "assets/audio/salim-teo.mp3",
+      "assets/audio/ko.m4a",
+      "assets/audio/salim-teo.mp3",
+      "assets/audio/ko.m4a",
+      "assets/audio/salim-teo.mp3",
+      "assets/audio/ko.m4a",
+      "assets/audio/salim-teo.mp3",
+      "assets/audio/ko.m4a",
+      "assets/audio/audio9.mp3"
     ];
 
-    // Shuffle array
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -244,8 +214,7 @@ document.querySelectorAll('#quote a').forEach((link, i) => {
       return array;
     }
 
-    const shuffled = shuffle([...audioPool]);
-    const selectedAudio = shuffled.slice(0, 4); // No duplicates
+    const selectedAudio = shuffle([...audioPool]).slice(0, 4);
 
     const audioElements = {
       TL: document.getElementById('audioTL'),
@@ -254,17 +223,16 @@ document.querySelectorAll('#quote a').forEach((link, i) => {
       BR: document.getElementById('audioBR')
     };
 
-    const cornerKeys = Object.keys(audioElements);
-    cornerKeys.forEach((corner, i) => {
+    Object.keys(audioElements).forEach((corner, i) => {
       audioElements[corner].src = selectedAudio[i];
     });
 
-    // Unmute on first interaction
-window.addEventListener('click', () => {
-  Object.values(audioElements).forEach(audio => {
-    audio.muted = false;
-  });
-}, { once: true });
+    // Unmute on first mouse move
+    window.addEventListener('mousemove', () => {
+      Object.values(audioElements).forEach(audio => {
+        audio.muted = false;
+      });
+    }, { once: true });
 
     // Volume based on cursor distance
     function getDistance(x1, y1, x2, y2) {
