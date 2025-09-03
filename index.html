@@ -10,42 +10,67 @@
       margin: 0;
       background-color: black;
       height: 100vh;
-      font-family: 'Helvetica Neue', sans-serif;
+      font-family: 'Arial Narrow', Arial, sans-serif;
       font-style: bold;
       overflow: hidden;
       cursor: none;
       color: white;
     }
 
-    .quote {
-      transition: color 0.4s ease;
-      text-transform: uppercase;
-      word-spacing: 0.9em;
-      letter-spacing: 0.1em;
-      padding: 4vw;
-      font-size: 4.2vw;
-      line-height: 1.6;
-      position:sticky;
-      top: 100;
+    /* HORIZONTAL SCROLLER (manual, infinite loop) */
+    .scroller {
+      position: fixed;
+      top: 50%;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      box-sizing: border-box;
+      width: 100%;
+      height: auto;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+      transform: translateY(-50%);
       z-index: 1;
-      color: black;
+      scrollbar-width: none; /* Firefox */
     }
 
-    .quote a {
-      color: transparent;
+    .scroller::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    .scroller-content {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: clamp(12px, 1.5vw, 20px); /* responsive font */
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      word-spacing: 0.6em;
+      padding: 0 2vw;
+    }
+
+    /* Asterisk styling */
+    .scroller-content span.asterisk {
+      display: inline-block;
+      transform: scale(3);
+      transform-origin: center;
+      line-height: 4;
+      vertical-align: middle;
+      color:#0f0;
+    }
+
+    /* Default state: hidden text */
+    .scroller-content a {
+      color: black;
       text-decoration: none;
+      margin-right: 1.5em;
       transition: color 0.3s ease;
     }
 
-    .quote a:hover {
+    /* Show on hover */
+    .scroller-content a:hover {
       color: white;
     }
 
-    .quote.visible a {
+    /* Toggle ON: show all text */
+    .scroller-content.visible a {
       color: white;
     }
 
@@ -85,8 +110,8 @@
     .switch {
       position: relative;
       display: inline-block;
-      width: 46px;
-      height: 24px;
+      width: 60px;  /* larger for touch */
+      height: 30px;
     }
 
     .switch input {
@@ -108,8 +133,8 @@
     .slider:before {
       position: absolute;
       content: "";
-      height: 18px;
-      width: 18px;
+      height: 24px;  /* larger for touch */
+      width: 24px;
       left: 3px;
       bottom: 3px;
       background-color: white;
@@ -122,13 +147,18 @@
     }
 
     input:checked + .slider:before {
-      transform: translateX(22px);
+      transform: translateX(30px);
     }
 
-    @media (max-width: 768px) {
-      .quote {
-        font-size: 4.5vw;
-        padding: 6vw;
+    /* Small-screen adjustments */
+    @media (max-width: 480px) {
+      .scroller-content {
+        padding: 0 4vw;
+        letter-spacing: 0.1em;
+        word-spacing: 0.4em;
+      }
+      .toggle-container {
+        font-size: 1rem;
       }
     }
   </style>
@@ -142,17 +172,11 @@
     </label>
   </div>
 
-  <!-- Quote links -->
-  <div class="quote" id="quote">
-    <a href="1.html" target="_blank" rel="noopener noreferrer"></a>
-    <a href="2.html" target="_blank" rel="noopener noreferrer"></a>
-    <a href="3.html" target="_blank" rel="noopener noreferrer"></a>
-    <a href="4.html" target="_blank" rel="noopener noreferrer"></a>
-    <a href="5.html" target="_blank" rel="noopener noreferrer"></a>
-    <a href="6.html" target="_blank" rel="noopener noreferrer"></a>
-    <a href="7.html" target="_blank" rel="noopener noreferrer"></a>
-    <a href="8.html" target="_blank" rel="noopener noreferrer"></a>
-    <a href="9.html" target="_blank" rel="noopener noreferrer"></a>
+  <!-- Manual Scrolling Quote (looped) -->
+  <div class="scroller" id="scroller">
+    <div class="scroller-content" id="quoteLinePrev"></div>
+    <div class="scroller-content" id="quoteLine"></div>
+    <div class="scroller-content" id="quoteLineNext"></div>
   </div>
 
   <!-- Custom green cursor -->
@@ -165,13 +189,6 @@
   <audio id="audioBR" loop autoplay muted></audio>
 
   <script>
-    // QUOTE TOGGLE
-    const toggle = document.getElementById('toggleText');
-    const quote = document.getElementById('quote');
-    toggle.addEventListener('change', () => {
-      quote.classList.toggle('visible', toggle.checked);
-    });
-
     // CURSOR FOLLOW
     const cursor = document.getElementById('customCursor');
     document.addEventListener('mousemove', e => {
@@ -181,28 +198,70 @@
 
     // RANDOM QUOTES
     const quoteSets = [
-      ["A SIGNAL", "DOES NOT", "NECESSARILY MEAN THAT", "YOU", "WANT TO BE LOCATED", "OR DESCRIBED", "IT CAN MEAN THAT YOU WANT TO", "BE KNOWN AS UNLOCATABLE", "AND HIDDEN"],
-      ["THE NAME OF A MAN", "IS", "A NUMBING BLOW", "FROM", "WHICH", "HE", "NEVER", "RECOVERS", ""],
-      ["SO CLOSE THAT", "MY FEAR OF THEM", "AND THEIR FEAR OF ME", "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD", "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD"],
-      ["A REPETITIVE FLURRY", "OF MULTI-TONAL UTTERANCES—", "SQUEAKS AND CHIRPS", "IN QUICK SUCCESSION,", "NON-REVERBERANT", "WITH A SHORT RELEASE,", "MOVING ON ONE ANOTHER", "LIKE THE BEAT BELOW A CLUB MIX.", "(AND, OF COURSE, WHERE BETTER TO ECHOLOCATE THAN THE DARK, MUSTY CAVE OF A NIGHTCLUB?)."],
-      ["THEY BOUNCE OFF NEARBY OBSTACLES.", "SITUATE THEMSELVES THREE DIMENSIONALLY THROUGH THEIR USE OF INFORMATION", "COLLECTED WITH TWO EARS,", "WHOLE BODY, AND THE DANK CAVE.", "THE BAT'S USE OF SOUND WAVES", "TO ILLUMINATE", "AN INVISIBLE SPACE", "IS THE PROCESS OF MANY SENSES AND BODILY ORGANS.", "THE EARS, MOUTH, AND NOSE WORK TOGETHER."],
-      ["AN OPENING","REALIZING","THAT A FLOODLIGHT","ISN'T", "ALWAYS","OR NECESSARILY","THE", "BEST WAY","TO ILLUMINATE IT"]
+      ["A SIGNAL", "DOES NOT", "NECESSARILY MEAN THAT", "YOU", "WANT TO BE LOCATED", "OR DESCRIBED", "IT CAN MEAN THAT YOU WANT TO", "BE KNOWN AS UNLOCATABLE", "AND HIDDEN", " <span class='asterisk'>*</span>"],
+      ["THE NAME OF A", "MAN", "IS", "A NUMBING BLOW", "FROM", "WHICH", "HE", "NEVER", "RECOVERS", " <span class='asterisk'>*</span>"],
+      ["SO CLOSE THAT", "MY FEAR OF THEM", "AND THEIR FEAR OF ME", "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD", "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD", " <span class='asterisk'>*</span>"],
+      ["A REPETITIVE FLURRY", "OF MULTI-TONAL UTTERANCES—", "SQUEAKS AND CHIRPS", "IN QUICK SUCCESSION,", "NON-REVERBERANT", "WITH A SHORT RELEASE,", "MOVING ON ONE ANOTHER", "LIKE THE BEAT BELOW A CLUB MIX.", "(AND, OF COURSE, WHERE BETTER TO ECHOLOCATE THAN THE DARK, MUSTY CAVE OF A NIGHTCLUB?).", " <span class='asterisk'>*</span>"],
+      ["THEY BOUNCE OFF NEARBY OBSTACLES.", "SITUATE THEMSELVES THREE DIMENSIONALLY THROUGH THEIR USE OF INFORMATION", "COLLECTED WITH TWO EARS,", "WHOLE BODY, AND THE DANK CAVE.", "THE BAT'S USE OF SOUND WAVES", "TO ILLUMINATE", "AN INVISIBLE SPACE", "IS THE PROCESS OF MANY SENSES AND BODILY ORGANS.", "THE EARS, MOUTH, AND NOSE WORK TOGETHER.", " <span class='asterisk'>*</span>"],
+      ["AN OPENING","REALIZING","THAT A FLOODLIGHT","ISN'T", "ALWAYS","OR NECESSARILY","THE", "BEST WAY","TO ILLUMINATE IT", " <span class='asterisk'>*</span>"]
     ];
+
     const selected = quoteSets[Math.floor(Math.random() * quoteSets.length)];
-    document.querySelectorAll('#quote a').forEach((link, i) => {
-      link.textContent = selected[i] || "";
+    const buildLinks = arr => arr.map((text, i) =>
+      text ? `<a href="${i + 1}.html" target="_blank" rel="noopener noreferrer">${text}</a>` : ""
+    ).join(" ");
+
+    const quoteLinePrev = document.getElementById('quoteLinePrev');
+    const quoteLine = document.getElementById('quoteLine');
+    const quoteLineNext = document.getElementById('quoteLineNext');
+
+    // Build three copies for infinite scroll
+    quoteLinePrev.innerHTML = buildLinks(selected);
+    quoteLine.innerHTML = buildLinks(selected);
+    quoteLineNext.innerHTML = buildLinks(selected);
+
+    // Toggle: Show all text at once
+    const toggle = document.getElementById('toggleText');
+    toggle.addEventListener('change', () => {
+      [quoteLinePrev, quoteLine, quoteLineNext].forEach(el => {
+        if (toggle.checked) {
+          el.classList.add('visible');
+        } else {
+          el.classList.remove('visible');
+        }
+      });
+    });
+
+    // Infinite scroll logic
+    const scroller = document.getElementById('scroller');
+    const resetScroll = () => {
+      const middle = quoteLine.offsetLeft;
+      scroller.scrollLeft = middle;
+    };
+    window.addEventListener('load', resetScroll);
+
+    scroller.addEventListener('scroll', () => {
+      const width = quoteLine.offsetWidth;
+      const leftEdge = quoteLinePrev.offsetLeft;
+      const rightEdge = quoteLineNext.offsetLeft;
+
+      if (scroller.scrollLeft <= leftEdge) {
+        scroller.scrollLeft += width;
+      } else if (scroller.scrollLeft >= rightEdge) {
+        scroller.scrollLeft -= width;
+      }
     });
 
     // AUDIO SETUP
     const audioPool = [
       "assets/audio/salim-teo.mp3",
       "assets/audio/ko.m4a",
-      "assets/audio/salim-teo.mp3",
-      "assets/audio/ko.m4a",
-      "assets/audio/salim-teo.mp3",
-      "assets/audio/ko.m4a",
-      "assets/audio/salim-teo.mp3",
-      "assets/audio/ko.m4a",
+      "assets/audio/audio3.mp3",
+      "assets/audio/audio4.mp3",
+      "assets/audio/audio5.mp3",
+      "assets/audio/audio6.mp3",
+      "assets/audio/audio7.mp3",
+      "assets/audio/audio8.mp3",
       "assets/audio/audio9.mp3"
     ];
 
