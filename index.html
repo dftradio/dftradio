@@ -17,7 +17,7 @@
       color: white;
     }
 
-    /* HORIZONTAL SCROLLER (manual, infinite loop) */
+    /* horizontal scroll on infinite loop */
     .scroller {
       position: fixed;
       top: 50%;
@@ -33,13 +33,13 @@
     }
 
     .scroller::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
+      display: none; 
     }
 
     .scroller-content {
       display: inline-block;
       white-space: nowrap;
-      font-size: clamp(12px, 1.5vw, 20px); /* responsive font */
+      font-size: clamp(12px, 1.5vw, 20px); 
       text-transform: uppercase;
       letter-spacing: 0.15em;
       word-spacing: 0.6em;
@@ -56,7 +56,7 @@
       color:#0f0;
     }
 
-    /* Default state: hidden text */
+    /* hidden text */
     .scroller-content a {
       color: black;
       text-decoration: none;
@@ -64,17 +64,17 @@
       transition: color 0.3s ease;
     }
 
-    /* Show on hover */
+    /* text visible on hover */
     .scroller-content a:hover {
       color: white;
     }
 
-    /* Toggle ON: show all text */
+    /* toggle for visible text */
     .scroller-content.visible a {
       color: white;
     }
 
-    /* Custom blinking green cursor */
+    /* blinking green cursor */
     .cursor {
       position: fixed;
       left: 0;
@@ -110,7 +110,7 @@
     .switch {
       position: relative;
       display: inline-block;
-      width: 60px;  /* larger for touch */
+      width: 60px;  
       height: 30px;
     }
 
@@ -133,7 +133,7 @@
     .slider:before {
       position: absolute;
       content: "";
-      height: 24px;  /* larger for touch */
+      height: 24px;  
       width: 24px;
       left: 3px;
       bottom: 3px;
@@ -150,7 +150,7 @@
       transform: translateX(30px);
     }
 
-    /* Small-screen adjustments */
+  
     @media (max-width: 480px) {
       .scroller-content {
         padding: 0 4vw;
@@ -172,14 +172,14 @@
     </label>
   </div>
 
-  <!-- Manual Scrolling Quote (looped) -->
+  <!-- Looped Scrolling Quote -->
   <div class="scroller" id="scroller">
     <div class="scroller-content" id="quoteLinePrev"></div>
     <div class="scroller-content" id="quoteLine"></div>
     <div class="scroller-content" id="quoteLineNext"></div>
   </div>
 
-  <!-- Custom green cursor -->
+  <!-- green cursor -->
   <div class="cursor" id="customCursor"></div>
 
   <!-- Audio placeholders -->
