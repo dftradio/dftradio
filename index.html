@@ -93,6 +93,7 @@
       50% { opacity: 0; }
     }
 
+
     .toggle-container {
       position: fixed;
       top: 1rem;
@@ -150,8 +151,11 @@
       transform: translateX(30px);
     }
 
+    body.is-touch .cursor {
+  display: none;
+}
   
-    @media (max-width: 480px) {
+    @media (max-width: 480px) and (hover: none) and (pointer: coarse) {
       .scroller-content {
         padding: 0 4vw;
         letter-spacing: 0.1em;
@@ -160,6 +164,9 @@
       .toggle-container {
         font-size: 1rem;
       }
+  .cursor {
+    display: none !important;
+  }
     }
   </style>
 </head>
@@ -324,5 +331,8 @@
       }
     });
   </script>
+  <script>if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  document.body.classList.add('is-touch');
+}</script>
 </body>
 </html>
