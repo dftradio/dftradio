@@ -295,11 +295,12 @@
     });
 
     // Unmute on first mouse move
-    window.addEventListener('mousemove', () => {
-      Object.values(audioElements).forEach(audio => {
-        audio.muted = false;
-      });
-    }, { once: true });
+   window.addEventListener('mousemove', () => {
+  Object.values(audioElements).forEach(audio => {
+    audio.muted = false;
+    audio.play().catch(err => console.warn("Audio failed to play:", err));
+  });
+}, { once: true });
 
     // Volume based on cursor distance
     function getDistance(x1, y1, x2, y2) {
