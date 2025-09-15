@@ -192,7 +192,7 @@
     </label>
   </div>
   
-<div id="startOverlay">PRESS ANY KEY</div>
+<div id="startOverlay">press any key</div>
   
   <!-- Looped Scrolling Quote -->
   <div class="scroller" id="scroller">
@@ -334,7 +334,7 @@ const overlay = document.getElementById('startOverlay');
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 if (isTouchDevice) {
-  overlay.textContent = "TAP ANYWHERE";
+  overlay.textContent = "tap anywhere";
 }
 function startAudioAndHideOverlay() {
   overlay.style.display = 'none';       // Hide the message
