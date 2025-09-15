@@ -358,6 +358,15 @@ document.addEventListener('touchstart', startAudioAndHideOverlay);
         const volume = normalizeDistance(dist, maxDist * 0.75);
         audioElements[corner].volume = volume;
       }
+
+      function enableAudio() {
+  Object.values(audioElements).forEach(audio => {
+    audio.muted = false;
+    audio.play().catch(err => {
+      console.warn("Playback failed:", err);
+    });
+  });
+}
     });
   </script>
   <script>if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
