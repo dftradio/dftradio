@@ -162,20 +162,25 @@
 }
   
     @media (max-width: 480px) and (hover: none) and (pointer: coarse) {
-      .scroller-content {
-        padding: 0 4vw;
-        letter-spacing: 0.1em;
-        word-spacing: 0.4em;
-        color: white;
-      }
-      .toggle-container {
-        font-size: 1rem;
-      }
+  .scroller-content {
+    padding: 0 4vw;
+    letter-spacing: 0.1em;
+    word-spacing: 0.4em;
+    color: white;
+  }
+
+  .toggle-container {
+    font-size: 1rem;
+  }
+
   .cursor {
     display: none !important;
   }
       
-    }
+  .scroller-content a {
+    color: white !important;
+  }
+}
   </style>
 </head>
 <body>
@@ -323,6 +328,13 @@ function enableAudio() {
       console.warn("Playback failed:", err);
     });
   });
+}
+    // Update startOverlay text based on device type
+const overlay = document.getElementById('startOverlay');
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+if (isTouchDevice) {
+  overlay.textContent = "TAP ANYWHERE";
 }
 function startAudioAndHideOverlay() {
   overlay.style.display = 'none';       // Hide the message
