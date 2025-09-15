@@ -315,7 +315,14 @@ Object.values(audioElements).forEach(audio => {
   audio.muted = true;
   audio.pause();
 });
-
+function enableAudio() {
+  Object.values(audioElements).forEach(audio => {
+    audio.muted = false;
+    audio.play().catch(err => {
+      console.warn("Playback failed:", err);
+    });
+  });
+}
 function startAudioAndHideOverlay() {
   overlay.style.display = 'none';       // Hide the message
   enableAudio();                        // Start playing music
@@ -327,14 +334,7 @@ function removeEventListeners() {
   document.removeEventListener('click', startAudioAndHideOverlay);
   document.removeEventListener('touchstart', startAudioAndHideOverlay);
 }
- function enableAudio() {
-  Object.values(audioElements).forEach(audio => {
-    audio.muted = false;
-    audio.play().catch(err => {
-      console.warn("Playback failed:", err);
-    });
-  });
-}
+ 
 // Wait for any of these events to start
 document.addEventListener('keydown', startAudioAndHideOverlay);
 document.addEventListener('click', startAudioAndHideOverlay);
