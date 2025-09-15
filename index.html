@@ -233,7 +233,7 @@
 
     const selected = quoteSets[Math.floor(Math.random() * quoteSets.length)];
     const buildLinks = arr => arr.map((text, i) =>
-      text ? `<a href="${i + 1}.html" target="_blank" rel="noopener noreferrer">${text}</a>` : ""
+      text ? `<a href="${i + 1}.html">${text}</a>` : ""
     ).join(" ");
 
     const quoteLinePrev = document.getElementById('quoteLinePrev');
