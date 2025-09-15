@@ -327,7 +327,14 @@ function removeEventListeners() {
   document.removeEventListener('click', startAudioAndHideOverlay);
   document.removeEventListener('touchstart', startAudioAndHideOverlay);
 }
-
+ function enableAudio() {
+  Object.values(audioElements).forEach(audio => {
+    audio.muted = false;
+    audio.play().catch(err => {
+      console.warn("Playback failed:", err);
+    });
+  });
+}
 // Wait for any of these events to start
 document.addEventListener('keydown', startAudioAndHideOverlay);
 document.addEventListener('click', startAudioAndHideOverlay);
@@ -359,14 +366,6 @@ document.addEventListener('touchstart', startAudioAndHideOverlay);
         audioElements[corner].volume = volume;
       }
 
-      function enableAudio() {
-  Object.values(audioElements).forEach(audio => {
-    audio.muted = false;
-    audio.play().catch(err => {
-      console.warn("Playback failed:", err);
-    });
-  });
-}
     });
   </script>
   <script>if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
