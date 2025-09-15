@@ -74,7 +74,7 @@
       color: white;
     }
 
-    /* blinking green cursor */
+    /* green cursor */
     .cursor {
       position: fixed;
       left: 0;
@@ -88,7 +88,20 @@
       z-index: 10001;
     }
 
-
+/* press any key */
+    #startOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: black;
+  color: lime;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  z-index: 9999;
+  font-family: monospace;
+}
 
     .toggle-container {
       position: fixed;
@@ -175,7 +188,9 @@
       <span class="slider"></span>
     </label>
   </div>
-
+  
+<div id="startOverlay">PRESS ANY KEY</div>
+  
   <!-- Looped Scrolling Quote -->
   <div class="scroller" id="scroller">
     <div class="scroller-content" id="quoteLinePrev"></div>
@@ -296,16 +311,31 @@
       audioElements[corner].src = selectedAudio[i];
     });
 
-    // Unmute on first mouse move
-    function enableAudio() {
-  Object.values(audioElements).forEach(audio => {
-    audio.muted = false;
-    audio.play().catch(err => console.warn("Audio failed to play:", err));
-  });
+  // Show "Press Any Key" message and wait for any interaction
+const overlay = document.getElementById('startOverlay');
+
+// Prevent autoplay on load
+Object.values(audioElements).forEach(audio => {
+  audio.muted = true;
+  audio.pause();
+});
+
+function startAudioAndHideOverlay() {
+  overlay.style.display = 'none';       // Hide the message
+  enableAudio();                        // Start playing music
+  removeEventListeners();               // Clean up
 }
 
-window.addEventListener('click', enableAudio, { once: true });
-window.addEventListener('touchstart', enableAudio, { once: true });
+function removeEventListeners() {
+  document.removeEventListener('keydown', startAudioAndHideOverlay);
+  document.removeEventListener('click', startAudioAndHideOverlay);
+  document.removeEventListener('touchstart', startAudioAndHideOverlay);
+}
+
+// Wait for any of these events to start
+document.addEventListener('keydown', startAudioAndHideOverlay);
+document.addEventListener('click', startAudioAndHideOverlay);
+document.addEventListener('touchstart', startAudioAndHideOverlay);
 
     // Volume based on cursor distance
     function getDistance(x1, y1, x2, y2) {
