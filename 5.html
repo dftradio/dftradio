@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>5</title>
+  <title>SHANI</title>
   <link rel="icon" type="image/x-icon" href="assets/favicon.png">
   <style>
     body {
@@ -13,7 +13,27 @@
       background-color: black;
       color: white;
       line-height: 1.6;
+      cursor: none;
     }
+
+  .nav-buttons {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.nav-buttons button {
+  background: black;
+  color: white;
+  border: 2px solid #0f0;
+  padding: 0.75em 1.25em;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
 
     .container {
       max-width: 800px;
@@ -61,7 +81,11 @@ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
   <div class="container">
     <p>
      <i> I eat rice n peas with my curry because I am greedy and decadent</i><br>
-Shani Strand
+Shani Strand<br><br>
+    <div class="nav-buttons">
+  <button id="backButton"><</button>
+  <button id="nextButton">></button>
+</div>
     </p>
   </div>
   <!-- Green custom cursor -->
@@ -87,6 +111,37 @@ if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
     cursorEl.style.top = e.clientY + 'px';
   });
 }
+</script>
+  <script>
+  const currentPage = parseInt(window.location.pathname.match(/(\d+)\.html$/)?.[1], 10);
+  const backButton = document.getElementById('backButton');
+  const nextButton = document.getElementById('nextButton');
+
+  if (!isNaN(currentPage)) {
+    const nextPage = currentPage + 1;
+    const prevPage = currentPage - 1;
+
+    // Next page logic
+    if (nextPage <= 10) {
+      nextButton.addEventListener('click', () => {
+        window.location.href = `${nextPage}.html`;
+      });
+    } else {
+      nextButton.style.display = 'none';
+    }
+
+    // Back page logic
+    if (prevPage >= 1) {
+      backButton.addEventListener('click', () => {
+        window.location.href = `${prevPage}.html`;
+      });
+    } else {
+      backButton.style.display = 'none';
+    }
+  } else {
+    backButton.style.display = 'none';
+    nextButton.style.display = 'none';
+  }
 </script>
 </body>
 </html>
