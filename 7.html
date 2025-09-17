@@ -34,14 +34,59 @@
         font-size: 14px;
       }
     }
+    .cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 255, 0, 0.7);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 10001;
+}
+
+body.is-touch .cursor {
+  display: none !important;
+}
   </style>
+  <script>
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  document.body.classList.add('is-touch');
+}
+</script>
 </head>
 <body>
   <div class="container">
     <p>
-      I'm Calling You!<br>
+      <i>I'm Calling You!</i><br>
 Luisa Bryan
     </p>
   </div>
+  <!-- Green custom cursor -->
+<div class="cursor" id="customCursor"></div>
+
+<script>
+// Only show custom cursor if it's not a touch device
+if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+  const cursor = document.getElementById('customCursor');
+
+  // Create the green cursor if it doesn't exist
+  if (!cursor) {
+    const newCursor = document.createElement('div');
+    newCursor.classList.add('cursor');
+    newCursor.id = 'customCursor';
+    document.body.appendChild(newCursor);
+  }
+
+  // Cursor follow logic
+  document.addEventListener('mousemove', e => {
+    const cursorEl = document.getElementById('customCursor');
+    cursorEl.style.left = e.clientX + 'px';
+    cursorEl.style.top = e.clientY + 'px';
+  });
+}
+</script>
 </body>
 </html>
