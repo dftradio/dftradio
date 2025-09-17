@@ -85,11 +85,7 @@ body.is-touch .cursor {
 }
    
   </style>
-  <script>
-if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-  document.body.classList.add('is-touch');
-}
-</script>
+  
 </head>
 <body>
   <div class="container">
@@ -136,7 +132,13 @@ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
     backButton.style.display = 'none';
     nextButton.style.display = 'none';
   }
-</script><script>
+</script><
+           <script>
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  document.body.classList.add('is-touch');
+}
+</script>
+           script>
 // Only show custom cursor if it's not a touch device
 if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
   const cursor = document.getElementById('customCursor');
