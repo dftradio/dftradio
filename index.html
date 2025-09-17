@@ -15,6 +15,7 @@
       overflow: hidden;
       cursor: none;
       color: white;
+      letter-spacing: 0.15em;
     }
 
     /* horizontal scroll on infinite loop */
@@ -53,6 +54,18 @@
       transform-origin: center;
       line-height: 4;
       vertical-align: middle;
+      color:#0f0;
+    }
+    
+/* Superscript styling */
+      .scroller-content span.asterisk {
+      display: inline-block;
+      transform: scale(3);
+      transform-origin: center;
+      line-height: 4;
+      vertical-align: middle;
+        font-size:1.5vw;
+  
       color:#0f0;
     }
 
@@ -214,12 +227,12 @@
     });
 
     const quoteSets = [
-      ["A SIGNAL<span class='asterisk'><sup>1</sup><span class='asterisk'>", "DOES NOT", "NECESSARILY MEAN THAT", "YOU", "WANT TO BE LOCATED", "OR DESCRIBED", "IT CAN MEAN THAT YOU WANT TO", "BE KNOWN AS UNLOCATABLE", "AND HIDDEN", " <span class='asterisk'>*</span>"],
-      ["LOOK AT<span class='asterisk'><sup>1</sup><span class='asterisk'>", "THE SKILL", "AND SPIRIT", "WITH WHICH", "I RISE", "FROM THAT", "WHICH RESEMBLES", "THE GRAVE", "BUT ISN'T!","<span class='asterisk'>*</span>"],
-      ["THE NAME OF A<span class='asterisk'><sup>1</sup><span class='asterisk'>", "MAN", "IS", "A NUMBING BLOW", "FROM", "WHICH", "HE", "NEVER", "RECOVERS", " <span class='asterisk'>*</span>"],
-      ["SO CLOSE THAT<span class='asterisk'><sup>1</sup><span class='asterisk'>", "MY FEAR OF THEM", "AND THEIR FEAR OF ME", "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD", "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD", " <span class='asterisk'>*</span>"],
-      ["A REPETITIVE FLURRY<span class='asterisk'><sup>1</sup><span class='asterisk'>", "OF MULTI-TONAL UTTERANCES—", "SQUEAKS AND CHIRPS", "NON-REVERBERANT", "IN QUICK SUCCESSION,", "WITH A SHORT RELEASE,", "MOVING ON ONE ANOTHER", "LIKE THE BEAT BELOW A CLUB MIX.", "(AND, OF COURSE, WHERE BETTER TO ECHOLOCATE THAN THE DARK, MUSTY CAVE OF A NIGHTCLUB?).", " <span class='asterisk'>*</span>"],
-      ["AN OPENING<span class='asterisk'><sup>1</sup><span class='asterisk'>","REALIZING","THAT A FLOODLIGHT","ISN'T", "ALWAYS","OR NECESSARILY","THE", "BEST WAY","TO ILLUMINATE IT", " <span class='asterisk'>*</span>"]
+      ["A SIGNAL<span class='asterisk'><sup>1</sup><span class='sup'>", "DOES NOT", "NECESSARILY MEAN THAT", "YOU", "WANT TO BE LOCATED", "OR DESCRIBED", "IT CAN MEAN THAT YOU WANT TO", "BE KNOWN AS UNLOCATABLE", "AND HIDDEN", " <span class='asterisk'>*</span>"],
+      ["LOOK AT<span class='asterisk'><sup>1</sup><span class='sup'>", "THE SKILL", "AND SPIRIT", "WITH WHICH", "I RISE", "FROM THAT", "WHICH RESEMBLES", "THE GRAVE", "BUT ISN'T!","<span class='asterisk'>*</span>"],
+      ["THE NAME OF A<span class='asterisk'><sup>1</sup><span class='sup'>", "MAN", "IS", "A NUMBING BLOW", "FROM", "WHICH", "HE", "NEVER", "RECOVERS", " <span class='asterisk'>*</span>"],
+      ["SO CLOSE THAT<span class='asterisk'><sup>1</sup><span class='sup'>", "MY FEAR OF THEM", "AND THEIR FEAR OF ME", "BECAME ONE SAME FEAR", "AND THE HUNTER", "COULD NOT BE TOLD", "FROM THE HUNTED", "NOR THE EATER", "FROM THE FOOD", " <span class='asterisk'>*</span>"],
+      ["A REPETITIVE FLURRY<span class='asterisk'><sup>1</sup><span class='sup'>", "OF MULTI-TONAL UTTERANCES—", "SQUEAKS AND CHIRPS", "NON-REVERBERANT", "IN QUICK SUCCESSION,", "WITH A SHORT RELEASE,", "MOVING ON ONE ANOTHER", "LIKE THE BEAT BELOW A CLUB MIX.", "(AND, OF COURSE, WHERE BETTER TO ECHOLOCATE THAN THE DARK, MUSTY CAVE OF A NIGHTCLUB?).", " <span class='asterisk'>*</span>"],
+      ["AN OPENING<span class='asterisk'><sup>1</sup><span class='sup'>","REALIZING","THAT A FLOODLIGHT","ISN'T", "ALWAYS","OR NECESSARILY","THE", "BEST WAY","TO ILLUMINATE IT", " <span class='asterisk'>*</span>"]
     ];
 
     /* QUOTE ATTRIBUTIONS: 
