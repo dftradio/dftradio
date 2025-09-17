@@ -84,11 +84,7 @@ body.is-touch .cursor {
   display: none !important;
 }
   </style>
-  <script>
-if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-  document.body.classList.add('is-touch');
-}
-</script>
+ 
 </head>
 <body>
   <div class="container">
@@ -103,6 +99,11 @@ Chris Lloyd<br><br>
   <button id="nextButton">></button>
 </div>
   <a href="index.html" class="home-link">CALL HOME</a>
+  <script>
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  document.body.classList.add('is-touch');
+}
+</script>
   <!-- Green custom cursor -->
 <div class="cursor" id="customCursor"></div>
 
