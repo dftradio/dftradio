@@ -98,7 +98,6 @@
   font-size: 1.5rem;
   padding: 1rem 0;
   z-index: 9999;
-  font-family: 'Arial Narrow', Arial, sans-serif;
 }
 
     .toggle-container {
@@ -161,27 +160,22 @@
     body.is-touch .cursor {
   display: none;
 }
-  
+
     @media (max-width: 480px) and (hover: none) and (pointer: coarse) {
-  .scroller-content {
-    padding: 0 4vw;
-    letter-spacing: 0.1em;
-    word-spacing: 0.4em;
-    color: white;
-  }
-
-  .toggle-container {
-    font-size: 1rem;
-  }
-
+      .scroller-content {
+        padding: 0 4vw;
+        letter-spacing: 0.1em;
+        word-spacing: 0.4em;
+        color: white;
+      }
+      .toggle-container {
+        font-size: 1rem;
+      }
   .cursor {
     display: none !important;
   }
       
-  .scroller-content a {
-    color: white !important;
-  }
-}
+    }
   </style>
 </head>
 <body>
@@ -192,9 +186,9 @@
       <span class="slider"></span>
     </label>
   </div>
-  
-<div id="startOverlay">press any key</div>
-  
+
+<div id="startOverlay">PRESS ANY KEY</div>
+
   <!-- Looped Scrolling Quote -->
   <div class="scroller" id="scroller">
     <div class="scroller-content" id="quoteLinePrev"></div>
@@ -227,7 +221,7 @@
       ["A REPETITIVE FLURRY", "OF MULTI-TONAL UTTERANCES—", "SQUEAKS AND CHIRPS", "NON-REVERBERANT", "IN QUICK SUCCESSION,", "WITH A SHORT RELEASE,", "MOVING ON ONE ANOTHER", "LIKE THE BEAT BELOW A CLUB MIX.", "(AND, OF COURSE, WHERE BETTER TO ECHOLOCATE THAN THE DARK, MUSTY CAVE OF A NIGHTCLUB?).", " <span class='asterisk'>*</span>"],
       ["AN OPENING","REALIZING","THAT A FLOODLIGHT","ISN'T", "ALWAYS","OR NECESSARILY","THE", "BEST WAY","TO ILLUMINATE IT", " <span class='asterisk'>*</span>"]
     ];
-    
+
     /* QUOTE ATTRIBUTIONS: 
     1. Fanny Howe, Bewilderment (1999)
     2. Ann Boyer, What Resembles the Grave but Isn't
@@ -330,13 +324,6 @@ function enableAudio() {
     });
   });
 }
-    // Update startOverlay text based on device type
-const overlay = document.getElementById('startOverlay');
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-if (isTouchDevice) {
-  overlay.textContent = "tap anywhere";
-}
 function startAudioAndHideOverlay() {
   overlay.style.display = 'none';       // Hide the message
   enableAudio();                        // Start playing music
@@ -348,7 +335,7 @@ function removeEventListeners() {
   document.removeEventListener('click', startAudioAndHideOverlay);
   document.removeEventListener('touchstart', startAudioAndHideOverlay);
 }
- 
+
 // Wait for any of these events to start
 document.addEventListener('keydown', startAudioAndHideOverlay);
 document.addEventListener('click', startAudioAndHideOverlay);
