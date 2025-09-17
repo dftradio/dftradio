@@ -69,6 +69,17 @@
 body.is-touch .cursor {
   display: none !important;
 }
+    .home-link {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  color: white;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  z-index: 1000;
+}
   </style>
   <script>
 if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
@@ -89,6 +100,7 @@ Teo Halm & Salim Green<br><br>
   <button id="nextButton">></button>
 </div>
   </div>
+  <a href="index.html" class="home-link">CALL HOME</a>
   <!-- Green custom cursor -->
 <div class="cursor" id="customCursor"></div>
 
