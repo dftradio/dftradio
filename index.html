@@ -172,21 +172,26 @@
   display: none;
 }
 
-    @media (max-width: 480px) and (hover: none) and (pointer: coarse) {
-      .scroller-content {
-        padding: 0 4vw;
-        letter-spacing: 0.1em;
-        word-spacing: 0.4em;
-        color: white;
-      }
-      .toggle-container {
-        font-size: 1rem;
-      }
+   @media (max-width: 480px) and (hover: none) and (pointer: coarse) {
+  .scroller-content {
+    padding: 0 4vw;
+    letter-spacing: 0.1em;
+    word-spacing: 0.4em;
+    color: white;
+  }
+
+  .scroller-content a {
+    color: white !important;
+  }
+
+  .toggle-container {
+    font-size: 1rem;
+  }
+
   .cursor {
     display: none !important;
   }
-      
-    }
+}
   </style>
 </head>
 <body>
