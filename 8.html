@@ -13,9 +13,27 @@
       background-color: black;
       color: white;
       line-height: 1.6;
+      cursor: none;
     }
 
-  
+    .nav-buttons {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.nav-buttons button {
+  background: black;
+  color: white;
+  border: 2px solid #0f0;
+  padding: 0.75em 1.25em;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -63,30 +81,45 @@ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
     <p>
      <i> PHLEGM - A SONIC JOURNEY BY KWABENA</i><br>
 K.O. Asante <br><br>
-      <button id="nextButton">NEXT</button>
+    <div class="nav-buttons">
+  <button id="backButton"><</button>
+  <button id="nextButton">></button>
+</div>
     </p>
   </div>
   <!-- Green custom cursor -->
 <div class="cursor" id="customCursor"></div>
-<script> // Extract current page number from URL (e.g. "1.html")
+<script> 
   const currentPage = parseInt(window.location.pathname.match(/(\d+)\.html$/)?.[1], 10);
+  const backButton = document.getElementById('backButton');
+  const nextButton = document.getElementById('nextButton');
 
   if (!isNaN(currentPage)) {
     const nextPage = currentPage + 1;
+    const prevPage = currentPage - 1;
 
+    // Next page logic
     if (nextPage <= 10) {
-      document.getElementById('nextButton').addEventListener('click', () => {
+      nextButton.addEventListener('click', () => {
         window.location.href = `${nextPage}.html`;
       });
     } else {
-      // Hide button if on last page
-      document.getElementById('nextButton').style.display = 'none';
+      nextButton.style.display = 'none';
+    }
+
+    // Back page logic
+    if (prevPage >= 1) {
+      backButton.addEventListener('click', () => {
+        window.location.href = `${prevPage}.html`;
+      });
+    } else {
+      backButton.style.display = 'none';
     }
   } else {
-    // If not on a numbered page, hide the button
-    document.getElementById('nextButton').style.display = 'none';
+    backButton.style.display = 'none';
+    nextButton.style.display = 'none';
   }
-
+</script><script>
 // Only show custom cursor if it's not a touch device
 if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
   const cursor = document.getElementById('customCursor');
