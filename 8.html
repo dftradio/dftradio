@@ -68,8 +68,25 @@ K.O. Asante <br><br>
   </div>
   <!-- Green custom cursor -->
 <div class="cursor" id="customCursor"></div>
+<script> // Extract current page number from URL (e.g. "1.html")
+  const currentPage = parseInt(window.location.pathname.match(/(\d+)\.html$/)?.[1], 10);
 
-<script>
+  if (!isNaN(currentPage)) {
+    const nextPage = currentPage + 1;
+
+    if (nextPage <= 10) {
+      document.getElementById('nextButton').addEventListener('click', () => {
+        window.location.href = `${nextPage}.html`;
+      });
+    } else {
+      // Hide button if on last page
+      document.getElementById('nextButton').style.display = 'none';
+    }
+  } else {
+    // If not on a numbered page, hide the button
+    document.getElementById('nextButton').style.display = 'none';
+  }
+
 // Only show custom cursor if it's not a touch device
 if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
   const cursor = document.getElementById('customCursor');
