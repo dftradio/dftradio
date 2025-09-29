@@ -24,18 +24,19 @@
     /* horizontal scroll on infinite loop */
     .scroller {
       position: fixed;
-      top: 50%;
+      top: 0;
       left: 0;
       width: 100%;
-      height: auto;
+      height: 100vh;
       overflow-x: scroll;
       overflow-y: hidden;
       white-space: nowrap;
-      transform: translateY(-50%);
+      align-items: center;
       z-index: 1;
       scrollbar-width: none; /* Firefox */
     }
 
+    
     .scroller::-webkit-scrollbar {
       display: none; 
     }
