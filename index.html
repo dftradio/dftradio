@@ -99,6 +99,7 @@
       transform: translate(-50%, -50%);
       z-index: 10001;
     }
+      
 
 /* press any key */
     #startOverlay {
@@ -111,6 +112,19 @@
   padding: 1rem 0;
   z-index: 9999;
 }
+
+    /* scroll arrows text */
+
+    .scroll-arrows{
+      position: fixed;
+  top: 80%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  z-index: 9999;
+    }
 
     .toggle-container {
       position: fixed;
@@ -215,6 +229,7 @@
 
   <!-- green cursor -->
   <div class="cursor" id="customCursor"></div>
+  <div class="scroll-arrows">< > </div>
 
   <!-- Audio placeholders -->
   <audio id="audioTL" loop autoplay></audio>
